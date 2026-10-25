@@ -1,0 +1,14 @@
+# compile
+build/
+dist/
+log/
+out/
+bin/
+obj/
+*.o
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+
