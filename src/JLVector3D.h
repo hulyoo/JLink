@@ -18,6 +18,7 @@ public:
 
     double Module() const noexcept;
     double InnerProduct(const JLVector3D& other) const noexcept;
+    JLVector3D Unitize() const noexcept;
 
     JLVector3D operator-() const noexcept;
 
@@ -31,6 +32,7 @@ public:
     friend JLVector3D operator-(const JLVector3D& lvec,const JLVector3D& rvec) noexcept;
     friend JLVector3D operator*(const JLVector3D& lvec,double dVal) noexcept;
     friend JLVector3D operator*(double dVal,const JLVector3D& rvec) noexcept;
+    friend JLVector3D operator/(const JLVector3D& lvec,double dVal);
 private:
     double m_dX;
     double m_dY;
