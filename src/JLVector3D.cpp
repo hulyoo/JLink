@@ -28,6 +28,13 @@ double JLVector3D::InnerProduct(const JLVector3D& other) const noexcept
     return (m_dX * other.m_dX + m_dY * other.m_dY + m_dZ * other.m_dZ);
 }
 
+JLVector3D JLVector3D::Unitize() const noexcept
+{
+
+    double dModule = Module();
+    return (*this / dModule);
+}
+
 
 JLVector3D JLVector3D::operator-() const noexcept
 {
@@ -99,4 +106,8 @@ JLVector3D operator-(const JLVector3D& lvec,const JLVector3D& rvec) noexcept
     return lvec + (-rvec);
 }
 
+JLVector3D operator/(const JLVector3D& lvec,double dVal)
+{
+    
+}
 
