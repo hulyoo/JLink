@@ -108,6 +108,10 @@ JLVector3D operator-(const JLVector3D& lvec,const JLVector3D& rvec) noexcept
 
 JLVector3D operator/(const JLVector3D& lvec,double dVal)
 {
-    
+    JLVector3D res;
+    res.SetX(lvec.GetX() / dVal);
+    res.SetY(lvec.GetY() / dVal);
+    res.SetZ(lvec.GetZ() / dVal);
+    return res;
 }
 
