@@ -18,6 +18,15 @@ JLVector3D::JLVector3D(double dX,double dY,double dZ) noexcept
 
 }
 
+bool JLVector3D::IsNearZero() const noexcept
+{
+    return (
+        m_dX <= JL_MIN &&
+        m_dY <= JL_MIN &&
+        m_dZ <= JL_MIN
+    );
+}
+
 double JLVector3D::Module() const noexcept
 {
     return sqrt(m_dX * m_dX + m_dY * m_dY + m_dZ * m_dZ);
@@ -114,4 +123,5 @@ JLVector3D operator/(const JLVector3D& lvec,double dVal)
     res.SetZ(lvec.GetZ() / dVal);
     return res;
 }
+
 
