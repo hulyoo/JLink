@@ -16,6 +16,7 @@ public:
     void SetY(double dY) noexcept {m_dY = dY;}
     void SetZ(double dZ) noexcept {m_dZ = dZ;}
 
+    bool IsNearZero() const noexcept;
     double Module() const noexcept;
     double InnerProduct(const JLVector3D& other) const noexcept;
     JLVector3D Unitize() const noexcept;
