@@ -9,6 +9,9 @@ public:
     JLMatrix(){};
     ~JLMatrix() = default;
 
+    size_t GetRowCount() const noexcept{return Base::GetRowCount();}
+    size_t GetColCount() const noexcept{return Base::GetColCount();}
+
     T& operator()(size_t nRow,size_t nCol)
     {
         return Base::At(nRow,nCol);
@@ -19,10 +22,8 @@ public:
         return Base::At(nRow,nCol);
     }
 
-    JLMatrix& operator*(JLMatrix matrix)
-    {
-
-    } 
+    JLMatrix& operator*(JLMatrix matrix);
+     
     
 
 private:
