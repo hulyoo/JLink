@@ -10,12 +10,16 @@ template<typename T,size_t nRows = nDynamic,size_t nCols = nDynamic,class Enable
 class JLMatrixStorage
 {
 public:
-    JLMatrixStorage()
-        :m_vecVal(nRows * nCols)
+    JLMatrixStorage(size_t nRow,size_t nCol)
+        :m_vecVal(nRow * nCol)
+        ,m_nRow(nRow)
+        ,m_nCol(nCol)
     {
     }
 
     ~JLMatrixStorage() = default;
+
+    void Resize(size_t nRow,size_t nCol);
 
     T& At(size_t nRow,size_t nCol) 
     {
@@ -29,6 +33,8 @@ public:
     }
 
 private:
+    size_t m_nRow;
+    size_t m_nCol;
     std::vector<T> m_vecVal;
 };
 
@@ -37,9 +43,12 @@ class JLMatrixStorage <T,nRows,nCols,std::enable_if_t<(nRows != nDynamic && nCol
 {
 public:
     JLMatrixStorage()
+        :m_nRow(nRows)
+        ,m_nCol(nCols)
     {
     }
     ~JLMatrixStorage() = default;
+
 
     T& At(size_t nRow,size_t nCol)
     {
@@ -52,6 +61,8 @@ public:
         return m_arrVal[nRow * nCol - 1];
     }
 private:
+    size_t m_nRow;
+    size_t m_nCol;
     std::array<T,nRows * nCols> m_arrVal;
 };
 
