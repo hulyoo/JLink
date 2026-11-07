@@ -22,12 +22,14 @@ public:
         return Base::At(nRow,nCol);
     }
 
-    JLMatrix& operator*(JLMatrix matrix);
      
     
 
 private:
 };
+
+template<typename T,size_t nRows,size_t nPub,size_t nCols>
+JLMatrix<T,nRows,nCols> operator*(JLMatrix<T,nRows,nPub> lmat,JLMatrix<T,nPub,nCols> rmat);
 
 using JLMatrix4f = JLMatrix<float,4,4>;
 using JLMatrix4d = JLMatrix<double,4,4>;
