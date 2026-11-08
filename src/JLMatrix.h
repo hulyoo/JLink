@@ -3,12 +3,15 @@
 
 
 template<typename T,typename R>
-using valueType = typename JLMatrixValueType<T,R>::valueType; 
+struct JLMatrixValueType
+{
+    using valuetype = decltype(std::declval<T>() * std::declval<R>());
+};
 
 template<size_t nRow,size_t nCol>
 struct JLMatrixSize
 {
-    constexpr size = (nRow == nDynamic || nCol == nDynamic) ? nDynamic : nRow;
+    static constexpr size_t size = (nRow == nDynamic || nCol == nDynamic) ? nDynamic : nRow;
 };
 
 
@@ -19,8 +22,19 @@ class JLMatrix : private JLMatrixStorage<T,nRows,nCols>
     using Base = JLMatrixStorage<T,nRows,nCols>;
 public:
 
-    template<typename T,size_t nRows,size_t nCols,std::enable_if<>
-    JLMatrix(){};
+       template<size_t R = nRows, size_t C = nCols,
+             typename std::enable_if<(R != nDynamic && C != nDynamic), int>::type = 0>
+    JLMatrix()
+    {
+
+    };
+
+    template<size_t R = nRows, size_t C = nCols,
+             typename std::enable_if<(R == nDynamic || C == nDynamic), int>::type = 0>
+    JLMatrix(size_t nRow,size_t nCol)
+    {
+
+    }
     ~JLMatrix() = default;
 
     size_t GetRowCount() const noexcept{return Base::GetRowCount();}
@@ -43,7 +57,7 @@ private:
 };
 
 template<typename T,typename R,size_t nRows,size_t nPub,size_t nCols>
-auto operator*(JLMatrix<T,nRows,nPub> lmat,JLMatrix<R,nPub,nCols> rmat) -> decltype(T{} * R{});
+JLMatrix<JLMatrixValueType<T,R>,nRows,nCols> operator*(JLMatrix<T,nRows,nPub> lmat,JLMatrix<R,nPub,nCols> rmat);
 
 using JLMatrix4f = JLMatrix<float,4,4>;
 using JLMatrix4d = JLMatrix<double,4,4>;
