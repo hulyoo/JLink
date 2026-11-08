@@ -1,11 +1,25 @@
 #pragma once
 #include "Storage.h"
 
+
+template<typename T,typename R>
+using valueType = typename JLMatrixValueType<T,R>::valueType; 
+
+template<size_t nRow,size_t nCol>
+struct JLMatrixSize
+{
+    constexpr size = (nRow == nDynamic || nCol == nDynamic) ? nDynamic : nRow;
+};
+
+
+
 template<typename T,size_t nRows,size_t nCols>
 class JLMatrix : private JLMatrixStorage<T,nRows,nCols>
 {
     using Base = JLMatrixStorage<T,nRows,nCols>;
 public:
+
+    template<typename T,size_t nRows,size_t nCols,std::enable_if<>
     JLMatrix(){};
     ~JLMatrix() = default;
 
@@ -22,14 +36,14 @@ public:
         return Base::At(nRow,nCol);
     }
 
-     
+    void Mul(JLMatrix& out,const JLMatrix& rmat); 
     
 
 private:
 };
 
-template<typename T,size_t nRows,size_t nPub,size_t nCols>
-JLMatrix<T,nRows,nCols> operator*(JLMatrix<T,nRows,nPub> lmat,JLMatrix<T,nPub,nCols> rmat);
+template<typename T,typename R,size_t nRows,size_t nPub,size_t nCols>
+auto operator*(JLMatrix<T,nRows,nPub> lmat,JLMatrix<R,nPub,nCols> rmat) -> decltype(T{} * R{});
 
 using JLMatrix4f = JLMatrix<float,4,4>;
 using JLMatrix4d = JLMatrix<double,4,4>;
