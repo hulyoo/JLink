@@ -8,6 +8,9 @@ struct JLMatrixValueType
     using valuetype = decltype(std::declval<T>() * std::declval<R>());
 };
 
+template<typename T,typename R>
+using JLMatrixValueType_t = typename JLMatrixValueType<T,R>::type;
+
 template<size_t nRow,size_t nCol>
 struct JLMatrixSize
 {
@@ -57,7 +60,7 @@ private:
 };
 
 template<typename T,typename R,size_t nRows,size_t nPub,size_t nCols>
-JLMatrix<JLMatrixValueType<T,R>,nRows,nCols> operator*(JLMatrix<T,nRows,nPub> lmat,JLMatrix<R,nPub,nCols> rmat);
+JLMatrix<JLMatrixValueType_t,nRows,nCols> operator*(JLMatrix<T,nRows,nPub> lmat,JLMatrix<R,nPub,nCols> rmat);
 
 using JLMatrix4f = JLMatrix<float,4,4>;
 using JLMatrix4d = JLMatrix<double,4,4>;
