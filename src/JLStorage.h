@@ -6,23 +6,23 @@
 
 #include "DataDef.h"
 
-// template<typename T,size_t nRow,size_t nCol,typename Enable = void>
-// class JLStorage;
 
 template<typename T,size_t nRow,size_t nCol,typename Enable = void>
 class JLStorage
 {
 public:
-    JLStorage()
-        :m_vecVal()
+    JLStorage(size_t nRows,size_t nCols)
+        :m_nRow(nRows)
+        ,m_nCol(nCols)
+        ,m_vecVal()
     {
         std::cout<< "dynamic storage" << std::endl;
     }
 
     ~JLStorage() = default;
 
-    size_t GetRowCount() const; 
-    size_t GetColCount() const;
+    size_t GetRowCount() const {return m_nRow;} 
+    size_t GetColCount() const {return m_nRow;}
 private:
     size_t m_nRow;
     size_t m_nCol;
