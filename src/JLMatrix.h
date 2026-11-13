@@ -3,18 +3,25 @@
 #include "DataDef.h"
 #include "JLStorage.h"
 
+template<typename T,typename R>
+struct JLMatrixValueType
+{
+    using type = decltype(std::declval<T>(),std::declval<R>());
+};
+
 template<typename T,size_t nRow = nDynamic,size_t nCol = nDynamic,typename Enable = void>
 class JLMatrix : private JLStorage<T,nRow,nCol>
 {
 public:
-    JLMatrix()
+    JLMatrix(size_t nRows,size_t nCols)
+        :JLStorage<T,nRow,nCol>(nRows,nCols)
     {
         std::cout << "dynamic" << std::endl;
     }
     ~JLMatrix() = default;
 
-    size_t GetRowCount() const {return JLStorage<T,nRow,nCol>::GetRowCount();}
-    size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
+    // size_t GetRowCount() const {return JLStorage<T,nRow,nCol>::GetRowCount();}
+    // size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
 
 private:
 };
