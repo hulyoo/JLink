@@ -1,3 +1,6 @@
+// @author: jl
+// @data: 2026.11.10
+
 #pragma once
 #include <array>
 #include "DataDef.h"
@@ -8,6 +11,13 @@ struct JLMatrixValueType
 {
     using type = decltype(std::declval<T>(),std::declval<R>());
 };
+
+template <size_t nRow,size_t nCol>
+struct JLMatrixSize
+{
+    static const matrixSize = nRow
+};
+
 
 template<typename T,size_t nRow = nDynamic,size_t nCol = nDynamic,typename Enable = void>
 class JLMatrix : private JLStorage<T,nRow,nCol>
@@ -20,8 +30,8 @@ public:
     }
     ~JLMatrix() = default;
 
-    // size_t GetRowCount() const {return JLStorage<T,nRow,nCol>::GetRowCount();}
-    // size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
+    size_t GetRowCount() const {return JLStorage<T,nRow,nCol>::GetRowCount();}
+    size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
 
 private:
 };
