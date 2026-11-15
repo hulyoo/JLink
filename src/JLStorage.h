@@ -23,6 +23,8 @@ public:
 
     size_t GetRowCount() const {return m_nRow;} 
     size_t GetColCount() const {return m_nRow;}
+
+    T At(size_t nRowIdx,size_t nColIdx){return m_vecVal[nRowIdx * nColIdx - 1];}
 private:
     size_t m_nRow;
     size_t m_nCol;
@@ -39,6 +41,8 @@ public:
 
     size_t GetRowCount() const {return nRow;}
     size_t GetColCOunt() const {return nCol;}
+
+    T At(size_t nRowIdx,size_t nColIdx){return m_arrVal[nRowIdx * nColIdx - 1];}
 private:
     std::array<T,nRow * nCol> m_arrVal;
 };
