@@ -32,8 +32,13 @@ public:
 
     size_t GetRowCount() const {return JLStorage<T,nRow,nCol>::GetRowCount();}
     size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
+
+    T& operator()(size_t nRowIndx,size_t nColIndx)
+    {
+        return JLStorage<T,nRow,nCol>::operator()(nRowIndx,nColIndx);
+    }
     
-    T At(size_t nRowIdx,size_t nColIdx) {return this->At(nRowIdx,nColIdx);}
+    T At(size_t nRowIndx,size_t nColIndx) {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
 
 private:
 };
@@ -51,11 +56,17 @@ public:
     size_t GetRowCount() const {return JLStorage<T,nRow,nCol>::GetRowCount();}
     size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
 
-    T At(size_t nRowIdx,size_t nColIdx) {return this->At(nRowIdx,nColIdx);}
+    T At(size_t nRowIndx,size_t nColIndx) {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
+
+    T& operator()(size_t nRowIndx,size_t nColIndx)
+    {
+        return JLStorage<T,nRow,nCol>::operator()(nRowIndx,nColIndx);
+    }
 };
 
-template<typename T,typename R,size_t nRow,size_t nPub,size_t nCol>
-JLMatrix<typename JLMatrixValueType<T,R>::type,nRow,nCol> operator*(const JLMatrix<T,nRow,nPub>& lmat,const JLMatrix<T,nPub,nCol>& rmat);
+template<typename T,typename R,size_t nRowL,size_t nColL,size_t nRowR,size_t nColR>
+JLMatrix<typename JLMatrixValueType<T,R>::type,nRowL,nColR> operator*(const JLMatrix<T,nRowR,nColR>& lmat,
+    const JLMatrix<R,nRowR,nColR>& rmat);
 
 using JLMatrix3d = JLMatrix<double,3,3>;
 using JLMatrix3f = JLMatrix<float,3,3>;
