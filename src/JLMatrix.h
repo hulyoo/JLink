@@ -9,7 +9,7 @@
 template<typename T,typename R>
 struct JLMatrixValueType
 {
-    using type = std::remove_reference_t<decltype(std::declval<T>(),std::declval<R>())>;
+    using type = std::common_type_t<std::decay_t<T>,std::decay_t<R>>;
 };
 
 template <size_t nRow,size_t nCol>
@@ -70,6 +70,8 @@ public:
 template<typename T,typename R,size_t nRowL,size_t nColL,size_t nRowR,size_t nColR>
 JLMatrix<typename JLMatrixValueType<T,R>::type,nRowL,nColR> operator*(const JLMatrix<T,nRowR,nColR>& lmat,
     const JLMatrix<R,nRowR,nColR>& rmat);
+
+template<typename T,typename R,size_t nRow,size_t nCol>
 
 
 
