@@ -9,7 +9,7 @@
 template<typename T,typename R>
 struct JLMatrixValueType
 {
-    using type = decltype(std::declval<T>(),std::declval<R>());
+    using type = std::remove_reference_t<decltype(std::declval<T>(),std::declval<R>())>;
 };
 
 template <size_t nRow,size_t nCol>
@@ -39,9 +39,11 @@ public:
     }
     
     T At(size_t nRowIndx,size_t nColIndx) {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
+    T At(size_t nRowIndx,size_t nColIndx) const {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
 
 private:
 };
+
 
 
 template<typename T,size_t nRow,size_t nCol>
@@ -49,7 +51,7 @@ class JLMatrix<T,nRow,nCol,typename std::enable_if<nRow != nDynamic && nCol != n
     :private JLStorage<T,nRow,nCol>
 {
 public:
-    JLMatrix()
+    JLMatrix(size_t nRows = nRow,size_t nCols = nCol)
     {
         std::cout << "fixed" << std::endl;
     }
@@ -57,6 +59,7 @@ public:
     size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
 
     T At(size_t nRowIndx,size_t nColIndx) {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
+    T At(size_t nRowIndx,size_t nColIndx) const {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
 
     T& operator()(size_t nRowIndx,size_t nColIndx)
     {
@@ -67,6 +70,10 @@ public:
 template<typename T,typename R,size_t nRowL,size_t nColL,size_t nRowR,size_t nColR>
 JLMatrix<typename JLMatrixValueType<T,R>::type,nRowL,nColR> operator*(const JLMatrix<T,nRowR,nColR>& lmat,
     const JLMatrix<R,nRowR,nColR>& rmat);
+
+
+
+
 
 using JLMatrix3d = JLMatrix<double,3,3>;
 using JLMatrix3f = JLMatrix<float,3,3>;
