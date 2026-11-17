@@ -14,7 +14,7 @@ public:
     JLStorage(size_t nRows,size_t nCols)
         :m_nRow(nRows)
         ,m_nCol(nCols)
-        ,m_vecVal()
+        ,m_vecVal(m_nRow * m_nCol)
     {
         std::cout<< "dynamic storage" << std::endl;
     }
@@ -24,7 +24,8 @@ public:
     size_t GetRowCount() const {return m_nRow;} 
     size_t GetColCount() const {return m_nRow;}
 
-    T At(size_t nRowIndx,size_t nColIndx){return m_vecVal[nRowIndx * m_nCol + nColIndx];}
+    T At(size_t nRowIndx,size_t nColIndx) {return m_vecVal[nRowIndx * m_nCol + nColIndx];}
+    T At(size_t nRowIndx,size_t nColIndx) const {return m_vecVal[nRowIndx * m_nCol + nColIndx];}
 
     T& operator()(size_t nRowIndx,size_t nColIndx)
     {
@@ -51,7 +52,8 @@ public:
     size_t GetRowCount() const {return nRow;}
     size_t GetColCount() const {return nCol;}
 
-    T At(size_t nRowIndx,size_t nColIndx){return m_arrVal[nRowIndx * nCol + nColIndx];}
+    T At(size_t nRowIndx,size_t nColIndx) {return m_arrVal[nRowIndx * nCol + nColIndx];}
+    T At(size_t nRowIndx,size_t nColIndx) const {return m_arrVal[nRowIndx * nCol + nColIndx];}
 
     T& operator()(size_t nRowIndx,size_t nColIndx)
     {
