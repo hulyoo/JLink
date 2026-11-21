@@ -71,12 +71,14 @@ public:
         return JLStorage<T,nRow,nCol>::operator()(nRowIndx,nColIndx);
     }
 
-    template<typename R,typename = std::enable_if<std::is_arithmetic_v<R>>::type>
-    JLMatrix<T,nRow,nCol> operator*(R value) const
+    // template<typename R,typename = std::enable_if<std::is_arithmetic_v<R>>::type>
+    template<typename R,
+    typename = typename std::enable_if<std::is_arithmetic<R>::value>::type>
+    JLMatrix<typename JLMatrixValueType<T,R>::type,nRow,nCol> operator*(R value) const
     {
         size_t nRowCount = GetRowCount();
         size_t nColCount = GetColCount();
-        JLMatrix<T,nRow,nCol> matrix(nRowCount,nColCount);
+        JLMatrix<typename JLMatrixValueType<T,R>::type,nRow,nCol> matrix(nRowCount,nColCount);
         for(size_t i = 0; i < nRowCount; i++)
         {
             for(size_t j = 0; j < nColCount; j++)
