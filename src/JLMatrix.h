@@ -15,7 +15,7 @@ struct JLMatrixValueType
 template <size_t nRow,size_t nCol>
 struct JLMatrixSize
 {
-    static const size_t matrixSize = (nRow != nDynamic) ? nRow : nDynamic;
+    static const size_t matrixSize = (nRow != nDynamic && nCol != nDynamic) ? nRow : nDynamic;
 };
 
 
@@ -44,6 +44,8 @@ public:
     T At(size_t nRowIndx,size_t nColIndx) {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
     T At(size_t nRowIndx,size_t nColIndx) const {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
 
+    // JLMatrix<T,nRow,nCol> Invert();
+
 private:
 };
 
@@ -68,6 +70,26 @@ public:
     {
         return JLStorage<T,nRow,nCol>::operator()(nRowIndx,nColIndx);
     }
+
+    template<typename R,typename = std::enable_if<std::is_arithmetic_v<R>>::type>
+    JLMatrix<T,nRow,nCol> operator*(R value) const
+    {
+        size_t nRowCount = GetRowCount();
+        size_t nColCount = GetColCount();
+        JLMatrix<T,nRow,nCol> matrix(nRowCount,nColCount);
+        for(size_t i = 0; i < nRowCount; i++)
+        {
+            for(size_t j = 0; j < nColCount; j++)
+            {
+                matrix(i,j) = At(i,j) * value;
+            }
+        }
+        return matrix;
+    }
+
+    // JLMatrix<T,nRow,nCol> Invert();
+
+    // JLMatrix<T,nRow,nCol> Transpose();
 };
 
 
@@ -78,15 +100,16 @@ JLMatrixSize<nColL,nColR>::matrixSize>
 operator+(const JLMatrix<T,nRowL,nColL>& lmat,
     const JLMatrix<R,nRowR,nColR>& rmat);
 
-template<typename T,typename R,size_t nRow,size_t nCol>
-JLMatrix<typename JLMatrixValueType<T,R>::type,nRow,nCol> operator-(const JLMatrix<T,nRow,nCol>& lmat,
-    const JLMatrix<R,nRow,nCol>& rmat);
+template<typename T,typename R,size_t nRowL,size_t nColL,size_t nRowR,size_t nColR>
+JLMatrix<typename JLMatrixValueType<T,R>::type,
+JLMatrixSize<nRowL,nRowR>::matrixSize,
+JLMatrixSize<nColL,nColR>::matrixSize> 
+operator-(const JLMatrix<T,nRowL,nColL>& lmat,
+    const JLMatrix<R,nRowR,nColR>& rmat);
 
 template<typename T,typename R,size_t nRowL,size_t nColL,size_t nRowR,size_t nColR>
 JLMatrix<typename JLMatrixValueType<T,R>::type,nRowL,nColR> operator*(const JLMatrix<T,nRowR,nColR>& lmat,
     const JLMatrix<R,nRowR,nColR>& rmat);
-
-
 
 
 
