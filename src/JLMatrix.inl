@@ -46,3 +46,32 @@ JLMatrixSize<nColL,nColR>::matrixSize> operator+(const JLMatrix<T,nRowL,nColL>& 
     }
     return matrix;
 }
+
+template<typename T,typename R,size_t nRowL,size_t nColL,size_t nRowR,size_t nColR>
+JLMatrix<typename JLMatrixValueType<T,R>::type,
+JLMatrixSize<nRowL,nRowR>::matrixSize,
+JLMatrixSize<nColL,nColR>::matrixSize>
+operator-(const JLMatrix<T,nRowL,nColL>& lmat,const JLMatrix<R,nRowR,nColR>& rmat)
+{
+    size_t nRow = lmat.GetRouwCount();
+    size_t nCol = lmat.GetColCount();
+
+    JLMatrix<typename JLMatrixValueType<T,R>::type,
+    JLMatrixSize<nRowL,nRowR>::matrixSize,
+    JLMatrixSize<nColL,nColR>::matrixSize> matrix(nRow,nCol);
+
+    for(size_t i = 0; i < nRow;i++)
+    {
+        for(size_t j = 0; j < nCol;j++)
+        {
+            matrix(i,j) = lmat.At(i,j) - rmat.At(i,j);
+        }
+    }
+    return matrix;
+}
+
+template<typename T,typename R,size_t nRow,size_t nCol>
+JLMatrix<typename JLMatrixValueType<T,R>::type,nRow,nCol> operator*(R val,const JLMatrix<T,nRow,nCol>& mat)
+{
+    return mat * val;
+}
