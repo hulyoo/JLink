@@ -43,7 +43,7 @@ template<typename T,size_t nRow,size_t nCol>
 class JLStorage<T,nRow,nCol,typename std::enable_if<nRow != nDynamic && nCol != nDynamic>::type>
 {
 public:
-    JLStorage()
+    JLStorage(size_t nRows,size_t nCols)
     {
         std::cout << "fixed storage" << std::endl;
     }
