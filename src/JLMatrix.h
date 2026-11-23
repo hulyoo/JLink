@@ -19,46 +19,14 @@ struct JLMatrixSize
 };
 
 
-template<typename T,size_t nRow = nDynamic,size_t nCol = nDynamic,typename Enable = void>
-class JLMatrix : private JLStorage<T,nRow,nCol>
-{
-public:
-    JLMatrix(size_t nRows,size_t nCols)
-        :JLStorage<T,nRow,nCol>(nRows,nCols)
-    {
-        std::cout << "dynamic" << std::endl;
-    }
-    ~JLMatrix() = default;
-
-    T& operator()(size_t nRowIndx,size_t nColIndx)
-    {
-        return JLStorage<T,nRow,nCol>::operator()(nRowIndx,nColIndx);
-    }
-
-
-    size_t GetRowCount() const {return JLStorage<T,nRow,nCol>::GetRowCount();}
-    size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
-
-    
-    
-    T At(size_t nRowIndx,size_t nColIndx) {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
-    T At(size_t nRowIndx,size_t nColIndx) const {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
-
-    // JLMatrix<T,nRow,nCol> Invert();
-
-private:
-};
-
-
-
-template<typename T,size_t nRow,size_t nCol>
-class JLMatrix<T,nRow,nCol,typename std::enable_if<nRow != nDynamic && nCol != nDynamic>::type>
+template<typename T,size_t nRow = nDynamic,size_t nCol = nDynamic>
+class JLMatrix
     :private JLStorage<T,nRow,nCol>
 {
 public:
     JLMatrix(size_t nRows = nRow,size_t nCols = nCol)
+        :JLStorage<T,nRow,nCol>(nRows,nCols)
     {
-        std::cout << "fixed" << std::endl;
     }
     size_t GetRowCount() const {return JLStorage<T,nRow,nCol>::GetRowCount();}
     size_t GetColCount() const {return JLStorage<T,nRow,nCol>::GetColCount();}
