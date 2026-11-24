@@ -75,3 +75,39 @@ JLMatrix<typename JLMatrixValueType<T,R>::type,nRow,nCol> operator*(R val,const 
 {
     return mat * val;
 }
+
+template<typename T,size_t nRow,size_t nCol>
+JLMatrix<T,nRow,nCol> JLMatrix<T,nRow,nCol>::Invert()
+{
+    size_t nRows = GetRowCount();
+    size_t nCols = GetColCount();
+    JLMatrix<T,nRow,nCol> matrix(nRows,nCols);
+    return matrix;
+}
+
+template<typename T,size_t nRow,size_t nCol>
+JLMatrix<T,nRow,nCol> JLMatrix<T,nRow,nCol>::Transpose()
+{
+    // temperary
+    size_t nBlockSize = 64;
+    size_t nRows = GetRowCount();
+    size_t nCols = GetColCount();
+    JLMatrix<T,nRow,nCol> matrix(nRows,nCols);
+    for(size_t i = 0; i < nRows; i += nBlockSize)
+    {
+        for(size_t j = 0; j < nCols; j += nBlockSize)
+        {
+            size_t z = std::min(i + nBlockSize,nRows);
+            size_t k = std::min(j + nBlockSize,nCols);
+            
+            for(size_t r = 0; r < z; r++)
+            {
+                for(size_t t = 0; t < k; t++)
+                {
+                    matrix(t,r) = At(r,t);
+                }
+            }
+        }
+    }
+    return matrix;
+}
