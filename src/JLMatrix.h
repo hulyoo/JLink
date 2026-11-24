@@ -34,12 +34,12 @@ public:
     T At(size_t nRowIndx,size_t nColIndx) {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
     T At(size_t nRowIndx,size_t nColIndx) const {return JLStorage<T,nRow,nCol>::At(nRowIndx,nColIndx);}
 
+
     T& operator()(size_t nRowIndx,size_t nColIndx)
     {
         return JLStorage<T,nRow,nCol>::operator()(nRowIndx,nColIndx);
     }
 
-    // template<typename R,typename = std::enable_if<std::is_arithmetic_v<R>>::type>
     template<typename R,
     typename = typename std::enable_if<std::is_arithmetic<R>::value>::type>
     JLMatrix<typename JLMatrixValueType<T,R>::type,nRow,nCol> operator*(R value) const
@@ -57,9 +57,9 @@ public:
         return matrix;
     }
 
-    // JLMatrix<T,nRow,nCol> Invert();
+    JLMatrix<T,nRow,nCol> Invert();
 
-    // JLMatrix<T,nRow,nCol> Transpose();
+    JLMatrix<T,nRow,nCol> Transpose();
 };
 
 
