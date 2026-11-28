@@ -2,7 +2,6 @@
 // @data: 2026.11.10
 
 #pragma once
-#include <array>
 #include "DataDef.h"
 #include "JLStorage.h"
 
@@ -39,6 +38,7 @@ public:
     {
         return JLStorage<T,nRow,nCol>::operator()(nRowIndx,nColIndx);
     }
+    
 
     template<typename R,
     typename = typename std::enable_if<std::is_arithmetic<R>::value>::type>
@@ -91,3 +91,4 @@ using JLMatrix4d = JLMatrix<double,4,4>;
 using JLMatrix4f = JLMatrix<float,4,4>;
 
 #include "JLMatrix.inl"
+#include "JLMatrixOper.inl"
