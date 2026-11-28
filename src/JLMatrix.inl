@@ -111,3 +111,15 @@ JLMatrix<T,nRow,nCol> JLMatrix<T,nRow,nCol>::Transpose()
     }
     return matrix;
 }
+
+template<typename T,size_t nRow,size_t nCol>
+JLMatrix<T,nRow,nCol> JLMatrix<T,nRow,nCol>::Invert()
+{
+    size_t nRows = GetRwoCount();
+    size_t nCols = GetColCount();
+    assert(nRows == nCols);
+
+    
+
+    return matrix;
+}
